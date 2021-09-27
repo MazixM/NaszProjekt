@@ -1,0 +1,50 @@
+﻿@inherits LayoutComponentBase
+
+@inject ILanguageContainerService languageContainer
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <div class="main">
+
+        <div class="top-row px-4">
+            <label style="margin-right:5px;">@languageContainer.Keys["ChooseLanguage"]</label>
+            <select @onchange="SetLanguage">
+                @if (availableLanguages != null)
+                {
+                    @foreach (var lng in availableLanguages)
+                    {
+                        <option value="@lng.ColtureCode">@lng.Name</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+</div>
+
+@code{
+    List<Language> availableLanguages = new List<Language>
+    {
+        new Language
+        {
+           Name="Polski",
+           ColtureCode="pl-PL"
+        },
+        new Language
+        {
+           Name="English",
+           ColtureCode="en-US"
+        }
+    };
+
+    void SetLanguage(ChangeEventArgs e)
+    {
+        languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(e.Value.ToString()));
+    }
+}

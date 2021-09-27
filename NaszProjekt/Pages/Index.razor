@@ -1,0 +1,13 @@
+﻿@page "/"
+
+@inject ILanguageContainerService languageContainer
+
+<h1>@languageContainer.Keys["HelloWorld"]</h1> 
+
+@code{
+    protected override void OnInitialized()
+    {
+        // This will make the current component gets updated whenever you change the language of the application 
+        languageContainer.InitLocalizedComponent(this);
+    }
+}
